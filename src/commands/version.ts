@@ -1,13 +1,16 @@
-import {readFileSync} from 'node:fs';
 import {CommandInterface} from './commands.interface.js';
 import chalk from 'chalk';
+import pkg from '../../package.json' assert { type: 'json' };
 
 export default class VersionCommand implements CommandInterface {
   public readonly name = '--version';
 
+  private readVersion(): string {
+    return pkg.version;
+  }
+
   public async execute(): Promise<void> {
-    const data = readFileSync('../package.json', 'utf-8');
-    const content = JSON.parse(data);
-    console.log(`${chalk.greenBright(content.version)}`);
+    const version = this.readVersion();
+    console.log(`${chalk.cyanBright(version)}`);
   }
 }

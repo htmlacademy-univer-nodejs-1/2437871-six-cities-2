@@ -2,6 +2,7 @@ import { City } from './city.js';
 import { Coordinates } from './coordinates.js';
 import { Facility } from './facility.js';
 import { HousesType } from './houses-type.js';
+import {User} from './user';
 
 export type Offer = {
   title: string,
@@ -18,8 +19,7 @@ export type Offer = {
   guestsNumber: number,
   price: number,
   facilities: Facility[],
-  authorId: string,
-  commentsIds: string[],
-  commentsNumber: number,
+  offerAuthor: User,
+  commentsCount: number,
   coordinates: Coordinates
 }
