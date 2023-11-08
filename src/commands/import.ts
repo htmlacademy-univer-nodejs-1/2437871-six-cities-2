@@ -2,6 +2,7 @@ import TSVFileReader from '../file-reader/tsv-file-reader.js';
 import { CommandInterface } from './commands.interface.js';
 import {createOffer} from '../helpers/offer.js';
 import chalk from 'chalk';
+import {throwErrorMessage} from "../helpers/error";
 
 export default class ImportCommand implements CommandInterface {
   public readonly name = '--import';
@@ -27,7 +28,7 @@ export default class ImportCommand implements CommandInterface {
         throw err;
       }
 
-      console.log(`${chalk.redBright(`Can't read the file with error: ${err}`)}`);
+      console.log(`${chalk.redBright(`Can't read the file with error: ${throwErrorMessage(err)}`)}`);
     }
   }
 }
