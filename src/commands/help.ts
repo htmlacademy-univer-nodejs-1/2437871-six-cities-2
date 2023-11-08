@@ -6,13 +6,14 @@ export default class HelpCommand implements CommandInterface {
 
   public async execute(): Promise<void> {
     console.log(`
-        Программа для подготовки данных для REST API сервера.
+        ${chalk.bgGreen('Программа для подготовки данных для REST API сервера.')}
         Пример:
-          ${chalk.green('npm run ts ./src/main.cli.ts --<command> [--arguments]')}
-        Команды: ${chalk.blue(`
-          --version:                   # выводит номер версии
-          --help:                      # печатает этот текст
-          --import <path>:             # импортирует данные из TSV`)}`
-    );
+            ts-node main.cli.ts ${chalk.cyanBright('--<command>')} ${chalk.blueBright('[--arguments]')}
+         ${chalk.bold('Команды')}
+              ${chalk.greenBright('--version:')}                  ${chalk.bgGreen('# выводит номер версии')}
+              ${chalk.greenBright('--help:')}                     ${chalk.bgGreen('# печатает этот текст')}
+              ${chalk.greenBright('--import')} ${chalk.blueBright('<path>')}:            ${chalk.bgGreen('# импортирует данные из TSV')}
+              ${chalk.greenBright('--generate')} ${chalk.blueBright('<n> <path> <url>')} ${chalk.bgGreen('# генерирует произвольное количество тестовых данных')}
+        `);
   }
 }

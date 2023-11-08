@@ -5,7 +5,7 @@ type ParsedCommand = {
 }
 
 export default class CLIApplication {
-  private commands: {[propertyName: string]: CommandInterface} = {};
+  private commands: { [propertyName: string]: CommandInterface } = {};
   private defaultCommand = '--help';
 
   private parseCommand(cliArguments: string[]): ParsedCommand {
@@ -24,14 +24,6 @@ export default class CLIApplication {
     }, parsedCommand);
   }
 
-  public registerCommands(commandList: CommandInterface[]): void {
-    commandList.reduce((acc, command) => {
-      const cliCommand = command;
-      acc[cliCommand.name] = cliCommand;
-      return acc;
-    }, this.commands);
-  }
-
   public getCommand(commandName: string): CommandInterface {
     return this.commands[commandName] ?? this.commands[this.defaultCommand];
   }
@@ -43,4 +35,13 @@ export default class CLIApplication {
     const commandArguments = parsedCommand[commandName] ?? [];
     command.execute(...commandArguments);
   }
+
+  public registerCommands(commandList: CommandInterface[]): void {
+    commandList.reduce((acc, command) => {
+      const cliCommand = command;
+      acc[cliCommand.name] = cliCommand;
+      return acc;
+    }, this.commands);
+  }
+
 }
