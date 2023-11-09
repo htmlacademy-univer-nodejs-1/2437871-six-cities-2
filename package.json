@@ -10,6 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start": "npm run build && node ./dist/main.js",
+    "cli:dev": "ts-node ./src/main.cli.ts",
     "build": "npm run clean && npm run compile",
     "lint": "eslint src/ --ext .ts",
     "compile": "tsc -p tsconfig.json",
@@ -38,12 +39,14 @@
     "npm": ">=8"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^9.13.2",
     "chalk": "^5.3.0",
     "convict": "^6.2.4",
     "convict-format-with-validator": "6.2.0",
     "dayjs": "1.11.7",
     "dotenv": "^16.0.3",
     "inversify": "6.0.1",
+    "mongoose": "^6.7.2",
     "pino": "8.7.0",
     "reflect-metadata": "0.1.13"
   }
