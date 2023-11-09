@@ -2,7 +2,7 @@ import TSVFileReader from '../file-reader/tsv-file-reader.js';
 import { CommandInterface } from './commands.interface.js';
 import {createOffer} from '../helpers/offer.js';
 import chalk from 'chalk';
-import {throwErrorMessage} from '../helpers/error';
+import {throwErrorMessage} from '../helpers/error.js';
 
 export default class ImportCommand implements CommandInterface {
   public readonly name = '--import';
