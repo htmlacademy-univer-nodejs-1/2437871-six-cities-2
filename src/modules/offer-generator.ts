@@ -5,18 +5,15 @@ import dayjs from 'dayjs';
 import {Cities} from '../types/city.js';
 import {HousesType} from '../types/houses-type.js';
 import {Facility} from '../types/facility.js';
-import {UserType} from '../types/user.js';
-
-const MIN_COST = 100;
-const MAX_COST = 100000;
-const MIN_RATING = 1;
-const MAX_RATING = 5;
-const MIN_COUNT = 1;
-const MAX_COUNT = 10;
-const MIN_COUNT_ROOM = 1;
-const MAX_COUNT_ROOM = 8;
-const FIRST_WEEK_DAY = 1;
-const LAST_WEEK_DAY = 7;
+import {UserTypeEnum} from '../types/user.js';
+import {
+  FIRST_WEEK_DAY,
+  LAST_WEEK_DAY, MAX_COST, MAX_COUNT,
+  MAX_COUNT_ROOM,
+  MAX_RATING, MIN_COST, MIN_COUNT,
+  MIN_COUNT_ROOM,
+  MIN_RATING
+} from '../helpers/consts.js';
 
 export default class OfferGenerator implements OfferGeneratorInterface {
   constructor(private readonly mockData: MockData) {
@@ -39,9 +36,8 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     const facilities = getRandomItems([Facility.AirConditioning, Facility.BabySeat, Facility.Fridge]);
     const offerAuthorName = getRandomItem<string>(this.mockData.users.usernames);
     const offerAuthorAvatar = getRandomItem<string>(this.mockData.users.avatars);
-    const offerAuthorType = getRandomItem([UserType.Pro, UserType.Usual]);
+    const offerAuthorType = getRandomItem([UserTypeEnum.Pro, UserTypeEnum.Simple]);
     const offerAuthorNameEmail = getRandomItem<string>(this.mockData.users.emails);
-    const offerAuthorNamePassword = getRandomItem<string>(this.mockData.users.passwords);
     const commentsCount = generateRandomValue(MIN_COUNT, MAX_COUNT);
     const latitude = getRandomItem<number>(this.mockData.coordinates.latitude);
     const longitude = getRandomItem<number>(this.mockData.coordinates.longitude);
@@ -52,7 +48,7 @@ export default class OfferGenerator implements OfferGeneratorInterface {
       favorite, rating, housingType, roomCount,
       guestCount, cost, facilities, offerAuthorName,
       offerAuthorAvatar, offerAuthorType, offerAuthorNameEmail,
-      offerAuthorNamePassword, commentsCount, latitude, longitude
+      commentsCount, latitude, longitude
     ].join('\t');
   }
 }
