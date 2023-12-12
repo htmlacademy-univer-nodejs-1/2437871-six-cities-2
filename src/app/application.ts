@@ -6,14 +6,46 @@ import {Component} from '../types/component.js';
 import {ConfigSchema} from '../config/config.schema.js';
 import {DatabaseClientInterface} from '../database-client/database-client.interface.js';
 import {getConnectionString} from '../helpers/connection-string.js';
+import express, { Express } from 'express';
+import {ControllerInterface} from '../controller/controller.interface.js';
+import {ExceptionFilter} from '../http/exception-fliter.interface.js';
 
 @injectable()
 export default class Application {
+  private expressApplication: Express;
   constructor(
     @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
     @inject(Component.ConfigInterface) private readonly config: ConfigInterface<ConfigSchema>,
-    @inject(Component.DatabaseClientInterface) private readonly databaseClient: DatabaseClientInterface
+    @inject(Component.DatabaseClientInterface) private readonly databaseClient: DatabaseClientInterface,
+    @inject(Component.OfferController) private readonly offerController: ControllerInterface,
+    @inject(Component.UserController) private userController: ControllerInterface,
+    @inject(Component.ExceptionFilter) private readonly appExceptionFilter: ExceptionFilter,
   ) {
+    this.expressApplication = express();
+  }
+
+  private async _initMiddleware() {
+    this.expressApplication.use(express.json());
+  }
+
+  private async _initServer() {
+    this.logger.info('Сервер инициализируется');
+
+    const port = this.config.get('PORT');
+    this.expressApplication.listen(port);
+
+    this.logger.info(`Сервер успешно стартовал на http://localhost:${this.config.get('PORT')}`);
+  }
+
+  private async _initRoutes() {
+    this.logger.info('Контроллеры инициализируются');
+    this.expressApplication.use('/offers', this.offerController.router);
+    this.expressApplication.use('/users', this.userController.router);
+    this.logger.info('Контроллеры успешно инициализированы');
+  }
+
+  private async _initExceptionFilters() {
+    this.expressApplication.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
   }
 
   public async init() {
@@ -33,5 +65,9 @@ export default class Application {
 
     await this.databaseClient.connect(mongoUri);
     this.logger.info('База данных инициализирована');
+    await this._initRoutes();
+    await this._initMiddleware();
+    await this._initExceptionFilters();
+    await this._initServer();
   }
 }
