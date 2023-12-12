@@ -30,7 +30,6 @@ export default class ImportCommand implements CommandInterface {
   constructor() {
     this.onLine = this.onLine.bind(this);
     this.onComplete = this.onComplete.bind(this);
-
     this.logger = new ConsoleLoggerService();
     this.offerService = new OfferService(this.logger, OfferModel, this.commentService);
     this.userService = new UserService(this.logger, UserModel);
