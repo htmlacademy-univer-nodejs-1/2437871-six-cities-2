@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import {Cities} from '../../../types/city.js';
 import {HousesType} from '../../../types/houses-type.js';
 
-export class FullOfferRdo {
+export class OfferShortRdo {
   @Expose()
   public id!: string;
 
