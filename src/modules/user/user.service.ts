@@ -7,13 +7,14 @@ import {types} from '@typegoose/typegoose';
 import {LoggerInterface} from '../../logger/logger.interface.js';
 import {Component} from '../../types/component.js';
 import {OfferEntity} from '../offer/offer.entity.js';
+import LoginUserDto from './dto/login-user.dto';
 
 @injectable()
 export default class UserService implements UserServiceInterface {
 
   constructor(
-    @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
-    @inject(Component.UserModel) private readonly userModel: types.ModelType<UserEntity>
+        @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
+        @inject(Component.UserModel) private readonly userModel: types.ModelType<UserEntity>
   ) {
   }
 
@@ -21,7 +22,7 @@ export default class UserService implements UserServiceInterface {
     const user = new UserEntity({...dto, avatar: ''});
     user.setPassword(dto.password, salt);
 
-    const result = await this.userModel.create(dto);
+    const result = await this.userModel.create(user);
     this.logger.info(`New user was created: ${user.email}`);
 
     return result;
@@ -34,7 +35,7 @@ export default class UserService implements UserServiceInterface {
     }
 
     return this.userModel
-      .find({_id: { $in: offers.favorite }});
+      .find({_id: { $in: offers.favorite }}).populate('offerId');
   }
 
   public async findByEmail(email: string): Promise<DocumentType<UserEntity> | null> {
@@ -53,6 +54,20 @@ export default class UserService implements UserServiceInterface {
 
   public async findById(userId: string): Promise<DocumentType<UserEntity> | null> {
     return this.userModel.findOne({'_id': userId});
+  }
+
+  public async verifyUser(dto: LoginUserDto, salt: string): Promise<DocumentType<UserEntity> | null> {
+    const user = await this.findByEmail(dto.email);
+
+    if (! user) {
+      return null;
+    }
+
+    if (user.verifyPassword(dto.password, salt)) {
+      return user;
+    }
+
+    return null;
   }
 
   public addToFavoritesById(userId: string, offerId: string): Promise<DocumentType<OfferEntity>[] | null> {
