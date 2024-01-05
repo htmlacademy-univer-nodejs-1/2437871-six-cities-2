@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`POST /offers > Success offers create 1`] = `
+{
+  "__v": 0,
+  "_id": "6598873f9bba8f1a1b5a5283",
+  "city": "Amsterdam",
+  "commentsCount": 0,
+  "coordinates": {
+    "latitude": 2.22222,
+    "longitude": 3.444444,
+  },
+  "cost": 10000,
+  "createdAt": "2024-01-05T22:48:32.001Z",
+  "description": "descriptiontwentylenght",
+  "facilities": [
+    "AirConditioning",
+  ],
+  "guestCount": 3,
+  "housingType": "House",
+  "images": [],
+  "name": "nametenlenght",
+  "premium": true,
+  "rating": 1,
+  "roomCount": 2,
+  "updatedAt": "2024-01-05T22:48:32.001Z",
+  "userId": "6598873f9bba8f1a1b5a5280",
+}
+`;
