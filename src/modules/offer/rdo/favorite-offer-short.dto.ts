@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import {Cities} from '../../../types/city.js';
 import {HousesType} from '../../../types/houses-type.js';
 
-export class FullOfferRdo {
+export class FavoriteOfferShortDto {
   @Expose()
   public id!: string;
 
@@ -21,8 +21,7 @@ export class FullOfferRdo {
   @Expose()
     premium!: boolean;
 
-  @Expose()
-    favorite!: boolean;
+  favorite = true;
 
   @Expose()
     rating!: number;

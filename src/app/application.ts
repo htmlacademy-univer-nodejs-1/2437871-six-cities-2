@@ -17,8 +17,9 @@ export default class Application {
     @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
     @inject(Component.ConfigInterface) private readonly config: ConfigInterface<ConfigSchema>,
     @inject(Component.DatabaseClientInterface) private readonly databaseClient: DatabaseClientInterface,
+    @inject(Component.UserController) private readonly userController: ControllerInterface,
     @inject(Component.OfferController) private readonly offerController: ControllerInterface,
-    @inject(Component.UserController) private userController: ControllerInterface,
+    @inject(Component.CommentController) private readonly commentController: ControllerInterface,
     @inject(Component.ExceptionFilter) private readonly appExceptionFilter: ExceptionFilter,
   ) {
     this.expressApplication = express();
@@ -26,35 +27,13 @@ export default class Application {
 
   private async _initMiddleware() {
     this.expressApplication.use(express.json());
+    this.expressApplication.use(
+      '/upload',
+      express.static(this.config.get('UPLOAD_DIRECTORY'))
+    );
   }
 
-  private async _initServer() {
-    this.logger.info('Сервер инициализируется');
-
-    const port = this.config.get('PORT');
-    this.expressApplication.listen(port);
-
-    this.logger.info(`Сервер успешно стартовал на http://localhost:${this.config.get('PORT')}`);
-  }
-
-  private async _initRoutes() {
-    this.logger.info('Контроллеры инициализируются');
-    this.expressApplication.use('/offers', this.offerController.router);
-    this.expressApplication.use('/users', this.userController.router);
-    this.logger.info('Контроллеры успешно инициализированы');
-  }
-
-  private async _initExceptionFilters() {
-    this.expressApplication.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
-  }
-
-  public async init() {
-    this.logger.info('Приложение инициализировано');
-    this.logger.info(`PORT: ${this.config.get('PORT')}`);
-    this.logger.info(`DB_HOST: ${this.config.get('DB_HOST')}`);
-    this.logger.info(`SALT: ${this.config.get('SALT')}`);
-
-    this.logger.info('База данных инициализируется');
+  private async _initDb() {
     const mongoUri = getConnectionString(
       this.config.get('DB_USER'),
       this.config.get('DB_PASSWORD'),
@@ -63,11 +42,45 @@ export default class Application {
       this.config.get('DB_NAME'),
     );
 
-    await this.databaseClient.connect(mongoUri);
-    this.logger.info('База данных инициализирована');
-    await this._initRoutes();
+    return this.databaseClient.connect(mongoUri);
+  }
+
+  private async _initServer() {
+    const port = this.config.get('PORT');
+    this.expressApplication.listen(port);
+  }
+
+  private async _initRoutes() {
+    this.expressApplication.use('/users', this.userController.router);
+    this.expressApplication.use('/offers', this.offerController.router);
+    this.expressApplication.use('/comments', this.commentController.router);
+  }
+
+  private async _initExceptionFilters() {
+    this.expressApplication.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
+  }
+
+  public async init() {
+    this.logger.info('Application initialization');
+
+    this.logger.info('Init database');
+    await this._initDb();
+    this.logger.info('Init database completed');
+
+    this.logger.info('Init middlewares');
     await this._initMiddleware();
+    this.logger.info('Middlewares initialization completed');
+
+    this.logger.info('Init routes');
+    await this._initRoutes();
+    this.logger.info('Routes initialization completed');
+
+    this.logger.info('Init exception filters');
     await this._initExceptionFilters();
+    this.logger.info('Exception filters initialization completed');
+
+    this.logger.info('Try to init server...');
     await this._initServer();
+    this.logger.info(`Server started on http://localhost:${this.config.get('PORT')}`);
   }
 }
