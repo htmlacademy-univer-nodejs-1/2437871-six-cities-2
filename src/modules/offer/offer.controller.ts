@@ -16,7 +16,7 @@ import {ValidateObjectIdMiddleware} from '../../middleware/validate-objectid.js'
 import {ValidateDtoMiddleware} from '../../middleware/validate-dto.js';
 import {ParamsCity, ParamsOffer, ParamsOffersCount} from '../../types/params.js';
 import {CreateOfferRequest} from './type/create-offer.request.js';
-import {FavoriteOfferShortDto} from './rdo/favorite-offer-short.dto.js';
+import {FavoriteOfferShortRdo} from './rdo/favorite-offer-short.rdo';
 
 @injectable()
 export default class OfferController extends Controller {
@@ -141,7 +141,7 @@ export default class OfferController extends Controller {
     userId: string
   }>, _res: Response): Promise<void> {
     const offers = await this.userService.findFavorites(body.userId);
-    this.ok(_res, fillDTO(FavoriteOfferShortDto, offers));
+    this.ok(_res, fillDTO(FavoriteOfferShortRdo, offers));
   }
 
   public async addFavorite({body}: Request<Record<string, unknown>, Record<string, unknown>, {
