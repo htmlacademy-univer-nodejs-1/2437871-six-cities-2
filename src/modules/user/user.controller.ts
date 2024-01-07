@@ -3,34 +3,35 @@ import {Request, Response} from 'express';
 import {UserServiceInterface} from './user-service.interface.js';
 import {HttpError} from '../../http/http.errors.js';
 import {StatusCodes} from 'http-status-codes';
-import {ConfigInterface} from '../../config/config.interface.js';
-import {ConfigSchema} from '../../config/config.schema.js';
+import {ConfigInterface} from '../../core/config/config.interface.js';
+import {RestSchema} from '../../core/config/rest.schema';
 import UserRdo from './rdo/user.rdo.js';
 import LoginUserDto from './dto/login-user.dto.js';
 import {CreateUserRequest} from './type/create-user-request.js';
 import {LoginUserRequest} from './type/login-user-request.js';
 import CreateUserDto from './dto/create-user.dto.js';
-import {Controller} from '../../controller/controller.abstract.js';
+import {Controller} from '../../core/controller/controller.abstract.js';
 import {Component} from '../../types/component.js';
-import {LoggerInterface} from '../../logger/logger.interface.js';
+import {LoggerInterface} from '../../core/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http.methods.js';
-import {ValidateDtoMiddleware} from '../../middleware/validate-dto.js';
-import {fillDTO} from '../../helpers/fillDTO.js';
-import {UploadFileMiddleware} from '../../middleware/upload-file.js';
-import {ValidateObjectIdMiddleware} from '../../middleware/validate-objectid.js';
-import {PrivateRouteMiddleware} from '../../middleware/private-route.js';
-import {BLACK_LIST_TOKENS} from '../../middleware/authenticate.js';
+import {ValidateDtoMiddleware} from '../../core/middleware/validate-dto.js';
+import {fillDTO} from '../../core/helpers/fillDTO.js';
+import {UploadFileMiddleware} from '../../core/middleware/upload-file.js';
+import {ValidateObjectIdMiddleware} from '../../core/middleware/validate-objec-id.js';
+import {PrivateRouteMiddleware} from '../../core/middleware/private-route.js';
+import {BLACK_LIST_TOKENS} from '../../core/middleware/authenticate.js';
 import LoggedUserRdo from './rdo/logged-user.rdo.js';
-import {JWT_ALGORITHM} from '../../helpers/consts.js';
-import {createJWT} from '../../helpers/create-JWT.js';
+import {JWT_ALGORITHM} from '../../core/helpers/constants.js';
+import {createJWT} from '../../core/helpers/create-JWT.js';
+import UploadUserAvatarResponse from './rdo/upload-user-avatar.rdo.js';
 
 @injectable()
 export default class UserController extends Controller {
   constructor(@inject(Component.LoggerInterface) logger: LoggerInterface,
                 @inject(Component.UserServiceInterface) private readonly userService: UserServiceInterface,
-                @inject(Component.ConfigInterface) private readonly configService: ConfigInterface<ConfigSchema>
+                @inject(Component.ConfigInterface) protected readonly configService: ConfigInterface<RestSchema>
   ) {
-    super(logger);
+    super(logger, configService);
 
     this.addRoute({
       path: '/register',
@@ -109,10 +110,11 @@ export default class UserController extends Controller {
         id: user.id
       }
     );
-    this.ok(res, fillDTO(LoggedUserRdo, {
-      email: user.email,
-      token
-    }));
+    this.ok(res,
+      {
+        ...fillDTO(LoggedUserRdo, user),
+        token
+      });
   }
 
   public async checkAuthenticate({user: {email}}: Request, res: Response) {
@@ -146,8 +148,9 @@ export default class UserController extends Controller {
   }
 
   public async uploadAvatar(req: Request, res: Response) {
-    this.created(res, {
-      filepath: req.file?.path
-    });
+    const {userId} = req.params;
+    const uploadFile = {avatar: req.file?.filename};
+    await this.userService.updateById(userId, uploadFile);
+    this.created(res, fillDTO(UploadUserAvatarResponse, uploadFile));
   }
 }
