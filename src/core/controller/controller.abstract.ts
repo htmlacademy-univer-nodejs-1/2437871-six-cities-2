@@ -5,11 +5,11 @@ import {LoggerInterface} from '../logger/logger.interface.js';
 import {RouteInterface} from '../../types/route.js';
 import {ControllerInterface} from './controller.interface.js';
 import asyncHandler from 'express-async-handler';
-import getFullServerPath from '../helpers/get-full-server-path.js';
+import fullServerPath from '../helpers/full-server-path.js';
 import transformObject from '../helpers/transform-object.js';
 import {STATIC_RESOURCE_FIELDS} from '../helpers/constants.js';
 import {ConfigInterface} from '../config/config.interface.js';
-import {RestSchema} from '../config/rest.schema';
+import {RestSchema} from '../config/rest.schema.js';
 
 @injectable()
 export abstract class Controller implements ControllerInterface {
@@ -37,11 +37,11 @@ export abstract class Controller implements ControllerInterface {
   }
 
   protected addStaticPath(data: Record<string, unknown>): void {
-    const fullServerPath = getFullServerPath(this.configService.get('HOST'), this.configService.get('PORT'));
+    const serverPath = fullServerPath(this.configService.get('HOST'), this.configService.get('PORT'));
     transformObject(
       STATIC_RESOURCE_FIELDS,
-      `${fullServerPath}/${this.configService.get('STATIC_DIRECTORY_PATH')}`,
-      `${fullServerPath}/${this.configService.get('UPLOAD_DIRECTORY')}`,
+      `${serverPath}/${this.configService.get('STATIC_DIRECTORY_PATH')}`,
+      `${serverPath}/${this.configService.get('UPLOAD_DIRECTORY')}`,
       data
     );
   }

@@ -1,23 +1,23 @@
 {
   "api": {
     "names": [
-      "Большой многоквартирный дом",
-      "Большая многоквартирная квартира",
-      "Большой деревенский дом",
-      "Вместительный комфортный отель",
-      "Небольшой уютный хостел"
+      "Spacious Apartment with City Park View",
+      "Stylish House in the City Center for a Week",
+      "Large Country House with Garden",
+      "Comfortable and Roomy Hotel",
+      "Small Cozy Hostel"
     ],
     "descriptions": [
-      "Уютная квартира на сутки с видом на городской парк",
-      "Стильный дом в центре города на неделю",
-      "Просторный офис в бизнес-центре на длительный срок",
-      "Комфортабельный номер в гостинице с завтраком включенным в стоимость",
-      "Аренда автомобиля на выходные с возможностью доставки к месту проживания",
-      "Отдельная комната в квартире семьи на месяц",
-      "Мини-гостиница на берегу моря с бассейном и барбекю",
-      "Аренда яхты на день для романтического путешествия по озеру",
-      "Комната для проведения тренинга или семинара в бизнес-центре",
-      "Аренда зала для свадебного торжества с кейтерингом и декорированием"
+      "Cozy apartment for a day with a view of the city park",
+      "Stylish house in the city center for a week",
+      "Spacious office in a business center for a long term rent",
+      "Comfortable hotel room with breakfast included in the price",
+      "Car rental for the weekend with delivery to the place of residence",
+      "Separate room in a family apartment for a month",
+      "Mini-hotel on the seafront with a pool and barbecue area",
+      "Yacht rental for a day for a romantic trip on the lake",
+      "Room for training or seminar in a business center",
+      "Hall rental for a wedding celebration with catering and decoration"
     ],
     "previewImages": [
       "previewImage1.jpg",
@@ -34,35 +34,38 @@
       "image5.jpg"
     ],
     "coordinates": {
-      "latitude": [2.4444, 3.4444, 5.6666],
-      "longitude": [8.4444, 4.4444, 56.6666]
-    },
-    "users" : {
-      "usernames": [
-        "Иван",
-        "Олег",
-        "Пьер",
-        "Роланд",
-        "Холи"
-      ],
-      "avatars": [
-        "avatar1.jpg",
-        "avatar2.jpg",
-        "avatar3.jpg",
-        "avatar4.jpg",
-        "avatar5.jpg"
-      ],
-      "emails": [
-        "snow@pisem.local",
-        "president@dka.local",
-        "fish@big.local",
-        "test@pisem.local",
-        "freedom@pisem.local",
-        "rolan@pochta.local",
-        "author@mir.local",
-        "test@lost.loca",
-        "kujo-fan@story.local"
-      ]
+      "latitude": [2.4444, 4.4444, 5.6666],
+      "longitude": [7.4444, 4.4444, 56.6666]
+    ,
+      "users": {
+        "usernames": [
+          "Oliver",
+          "Sophia",
+          "Ethan",
+          "Isabella",
+          "Liam",
+          "Ava"
+        ],
+        "avatars": [
+          "avatar1.jpg",
+          "avatar2.jpg",
+          "avatar3.jpg",
+          "avatar4.jpg",
+          "avatar5.jpg"
+        ],
+        "emails": [
+          "bluebird@sky.local",
+          "coffeebean@cafe.local",
+          "jumpfrog@pond.local",
+          "sunnyday@beach.local",
+          "greentree@forest.local",
+          "starrynight@sky.local",
+          "firefly@night.local",
+          "rainbow@sky.local",
+          "thunderstorm@cloud.local",
+          "snowflake@winter.local"
+        ]
+      }
     }
   }
 }

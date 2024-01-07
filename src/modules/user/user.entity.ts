@@ -1,7 +1,7 @@
 import typegoose, {defaultClasses, getModelForClass, Ref} from '@typegoose/typegoose';
 import {UserType, UserTypeEnum} from '../../types/user.js';
-import {createSHA256} from '../../core/helpers/create-sha.js';
 import {OfferEntity} from '../offer/offer.entity.js';
+import createSHA256 from '../../core/helpers/create-sha.js';
 
 const {prop, modelOptions} = typegoose;
 

@@ -1,9 +1,10 @@
 import {IsEmail, IsString} from 'class-validator';
+import {LoginUserMessage} from './messages/login-user.message.js';
 
 export default class LoginUserDto {
-  @IsEmail({}, {message: 'Email must be valid.'})
+  @IsEmail({}, {message: LoginUserMessage.email})
   public email!: string;
 
-  @IsString({message: 'Password is required.'})
+  @IsString({message: LoginUserMessage.password})
   public password!: string;
 }
