@@ -7,8 +7,8 @@ export type ParamsOffer = {
 
 export type ParamsCity = {
   city: string;
-}| ParamsDictionary
+} | ParamsDictionary
 
 export type ParamsOffersCount = {
   count: string;
-}| ParamsDictionary
+} | ParamsDictionary

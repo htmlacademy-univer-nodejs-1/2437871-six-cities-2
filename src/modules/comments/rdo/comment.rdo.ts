@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import UserRdo from '../../user/rdo/user.rdo.js';
+import {UserType} from '../../../types/user.js';
 
 export default class CommentRdo {
   @Expose()
@@ -16,5 +17,5 @@ export default class CommentRdo {
 
   @Expose({ name: 'userId'})
   @Type(() => UserRdo)
-  public user!: UserRdo;
+  public user!: UserType;
 }

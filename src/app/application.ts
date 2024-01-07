@@ -1,22 +1,22 @@
 import 'reflect-metadata';
-import {LoggerInterface} from '../logger/logger.interface.js';
-import {ConfigInterface} from '../config/config.interface.js';
+import {LoggerInterface} from '../core/logger/logger.interface.js';
+import {ConfigInterface} from '../core/config/config.interface.js';
 import {inject, injectable} from 'inversify';
 import {Component} from '../types/component.js';
-import {ConfigSchema} from '../config/config.schema.js';
-import {DatabaseClientInterface} from '../database-client/database-client.interface.js';
-import {getConnectionString} from '../helpers/connection-string.js';
+import {RestSchema} from '../core/config/rest.schema';
+import {DatabaseClientInterface} from '../core/database-client/database-client.interface.js';
+import {getConnectionString} from '../core/helpers/connection-string.js';
 import express, { Express } from 'express';
-import {ControllerInterface} from '../controller/controller.interface.js';
+import {ControllerInterface} from '../core/controller/controller.interface.js';
 import {ExceptionFilter} from '../http/exception-fliter.interface.js';
-import {AuthenticateMiddleware} from '../middleware/authenticate.js';
+import {AuthenticateMiddleware} from '../core/middleware/authenticate.js';
 
 @injectable()
 export default class Application {
   private expressApplication: Express;
   constructor(
     @inject(Component.LoggerInterface) private readonly logger: LoggerInterface,
-    @inject(Component.ConfigInterface) private readonly config: ConfigInterface<ConfigSchema>,
+    @inject(Component.ConfigInterface) private readonly config: ConfigInterface<RestSchema>,
     @inject(Component.DatabaseClientInterface) private readonly databaseClient: DatabaseClientInterface,
     @inject(Component.UserController) private readonly userController: ControllerInterface,
     @inject(Component.OfferController) private readonly offerController: ControllerInterface,
@@ -31,6 +31,10 @@ export default class Application {
     this.expressApplication.use(
       '/upload',
       express.static(this.config.get('UPLOAD_DIRECTORY'))
+    );
+    this.expressApplication.use(
+      '/static',
+      express.static(this.config.get('STATIC_DIRECTORY_PATH'))
     );
     const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
     this.expressApplication.use(authenticateMiddleware.execute.bind(authenticateMiddleware));

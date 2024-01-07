@@ -1,6 +1,6 @@
 import {DocumentType} from '@typegoose/typegoose';
 import {OfferEntity} from './offer.entity.js';
-import CreateOfferDto from './dto/create-offer.dto';
+import CreateOfferDto from './dto/create-offer.dto.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
 import {DocumentExistsInterface} from '../../types/document-exists.js';
 
@@ -15,5 +15,7 @@ export interface OfferServiceInterface extends DocumentExistsInterface {
   findPremiumByCity(city: string): Promise<DocumentType<OfferEntity>[]>;
   incComment(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
+  addImage(offerId: string, image?: string): Promise<void>;
+  removeImage(offerId: string, image?: string): Promise<void>;
   updateRating(offerId: string, rating: number): Promise<void>;
 }

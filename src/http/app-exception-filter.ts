@@ -2,9 +2,9 @@ import {NextFunction, Request, Response} from 'express';
 import {inject, injectable} from 'inversify';
 import {StatusCodes} from 'http-status-codes';
 import {Component} from '../types/component.js';
-import {LoggerInterface} from '../logger/logger.interface.js';
+import {LoggerInterface} from '../core/logger/logger.interface.js';
 import {HttpError} from './http.errors.js';
-import {createErrorObject} from '../helpers/error.js';
+import {createErrorObject} from '../core/helpers/error.js';
 import {ExceptionFilter} from './exception-fliter.interface.js';
 
 

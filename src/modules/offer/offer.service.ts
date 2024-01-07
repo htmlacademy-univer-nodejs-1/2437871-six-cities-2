@@ -4,7 +4,7 @@ import {DocumentType, types} from '@typegoose/typegoose';
 import {OfferEntity} from './offer.entity.js';
 import {OfferServiceInterface} from './offer-service.interface.js';
 import {Component} from '../../types/component.js';
-import {LoggerInterface} from '../../logger/logger.interface.js';
+import {LoggerInterface} from '../../core/logger/logger.interface.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
 import {SortType} from '../../types/sort-type.js';
 
@@ -56,6 +56,16 @@ export default class OfferService implements OfferServiceInterface {
       .limit(MAX_PREMIUM_OFFERS_COUNT)
       .populate('userId')
       .exec();
+  }
+
+  public async addImage(offerId: string, image: string): Promise<void> {
+    await this.offerModel
+      .updateOne({_id: offerId}, {$addToSet: {images: image}});
+  }
+
+  public async removeImage(offerId: string, image: string): Promise<void> {
+    await this.offerModel
+      .updateOne({_id: offerId}, {$pull: {images: image}});
   }
 
   incComment(offerId: string): Promise<DocumentType<OfferEntity> | null> {
