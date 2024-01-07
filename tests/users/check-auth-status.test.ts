@@ -11,9 +11,12 @@ const url = new URL(process.env['E2E_ENDPOINT']);
 
 describe('GET /users/login', async () => {
   test('Success user login', async (tc) => {
+    const email = 'test@test.com';
+    const password = '12345678910';
+
     const user = {
-      email: 'test@test.com',
-      password: '12345678910',
+      email,
+      password,
     };
 
     await fetch(new URL('/users/register', url), {

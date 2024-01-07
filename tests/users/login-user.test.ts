@@ -10,9 +10,12 @@ const url = new URL(process.env['E2E_ENDPOINT']);
 
 describe('POST /users/login', async () => {
   test('Success user login', async (tc) => {
+    const email = 'test@gmail.com';
+    const password = '12345678910';
+
     const user = {
-      email: 'test@test.com',
-      password: '12345678910',
+      email,
+      password,
     };
 
     await fetch(new URL('/users/register', url), {
@@ -22,9 +25,9 @@ describe('POST /users/login', async () => {
       }),
       body: JSON.stringify({
         type: 'simple',
-        email: 'test@test.com',
+        email,
         username: 'name',
-        password: '12345678910',
+        password,
       })
     });
 
@@ -41,10 +44,14 @@ describe('POST /users/login', async () => {
     tc.expect(response.headers.get('content-type')).toMatch(/application\/json/);
     tc.expect(await response.json()).toMatchSnapshot();
   });
+
   test('Invalid password or email', async (tc) => {
+    const email = 'test@gmail.com';
+    const password = 'ivalide';
+
     const user = {
-      email: 'test@test.com',
-      password: 'invalid',
+      email,
+      password,
     };
 
     const response = await fetch(new URL('/users/login', url), {

@@ -1,19 +1,20 @@
 import {UserTypeEnum} from '../../../types/user.js';
 import {IsEmail, IsEnum, IsString, Length} from 'class-validator';
+import {CreateUserMessage} from './messages/creata-user.message.js';
 
 export default class CreateUserDto {
-  @IsEmail({}, {message: 'Email must be valid.'})
-  @IsString({message: 'Email is required.'})
+  @IsEmail({}, {message: CreateUserMessage.email[0]})
+  @IsString({message: CreateUserMessage.email[1]})
   public email!: string;
 
-  @Length(1, 15, {message: 'Username length should be from 1 to 15.'})
-  @IsString({message: 'Username is required.'})
+  @Length(1, 15, {message: CreateUserMessage.name[0]})
+  @IsString({message: CreateUserMessage.name[1]})
   public username!: string;
 
-  @IsEnum(UserTypeEnum, {message: 'type must be one of the user type'})
+  @IsEnum(UserTypeEnum, {message: CreateUserMessage.type[0]})
   public type!: UserTypeEnum;
 
-  @Length(6, 12, {message: 'Password length should be from 6 to 12.'})
-  @IsString({message: 'Password is required.'})
+  @Length(6, 12, {message: CreateUserMessage.password[0]})
+  @IsString({message: CreateUserMessage.password[1]})
   public password!: string;
 }

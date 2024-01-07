@@ -1,6 +1,6 @@
 import {generateRandomValue, getRandomItem, getRandomItems} from '../../core/helpers/random.js';
 import {MockData} from '../../types/mock-data.type.js';
-import {OfferGeneratorInterface} from './offer-generator.interface';
+import {OfferGeneratorInterface} from './offer-generator.interface.js';
 import dayjs from 'dayjs';
 import {Cities} from '../../types/city.js';
 import {HousesType} from '../../types/houses-type.js';
@@ -9,9 +9,9 @@ import {UserTypeEnum} from '../../types/user.js';
 import {
   FIRST_WEEK_DAY,
   LAST_WEEK_DAY, MAX_COST, MAX_COUNT,
-  MAX_COUNT_ROOM,
+  MAX_ROOM_COUNT,
   MAX_RATING, MIN_COST, MIN_COUNT,
-  MIN_COUNT_ROOM,
+  MIN_ROOM_COUNT,
   MIN_RATING
 } from '../../core/helpers/constants.js';
 
@@ -30,7 +30,7 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     const favorite = getRandomItem<string>(['true', 'false']);
     const rating = generateRandomValue(MIN_RATING, MAX_RATING, 1);
     const housingType = getRandomItem([HousesType.House, HousesType.Hotel, HousesType.Room, HousesType.Apartment]);
-    const roomCount = generateRandomValue(MIN_COUNT_ROOM, MAX_COUNT_ROOM);
+    const roomCount = generateRandomValue(MIN_ROOM_COUNT, MAX_ROOM_COUNT);
     const guestCount = generateRandomValue(MIN_COUNT, MAX_COUNT);
     const cost = generateRandomValue(MIN_COST, MAX_COST);
     const facilities = getRandomItems([Facility.AirConditioning, Facility.BabySeat, Facility.Fridge]);

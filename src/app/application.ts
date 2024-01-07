@@ -3,9 +3,9 @@ import {LoggerInterface} from '../core/logger/logger.interface.js';
 import {ConfigInterface} from '../core/config/config.interface.js';
 import {inject, injectable} from 'inversify';
 import {Component} from '../types/component.js';
-import {RestSchema} from '../core/config/rest.schema';
+import {RestSchema} from '../core/config/rest.schema.js';
 import {DatabaseClientInterface} from '../core/database-client/database-client.interface.js';
-import {getConnectionString} from '../core/helpers/connection-string.js';
+import {connectionString} from '../core/helpers/connection-string/connection-string.js';
 import express, { Express } from 'express';
 import {ControllerInterface} from '../core/controller/controller.interface.js';
 import {ExceptionFilter} from '../http/exception-fliter.interface.js';
@@ -36,12 +36,12 @@ export default class Application {
       '/static',
       express.static(this.config.get('STATIC_DIRECTORY_PATH'))
     );
-    const authenticateMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
-    this.expressApplication.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
+    const authMiddleware = new AuthenticateMiddleware(this.config.get('JWT_SECRET'));
+    this.expressApplication.use(authMiddleware.execute.bind(authMiddleware));
   }
 
   private async _initDb() {
-    const mongoUri = getConnectionString(
+    const mongoUri = connectionString(
       this.config.get('DB_USER'),
       this.config.get('DB_PASSWORD'),
       this.config.get('DB_HOST'),

@@ -15,14 +15,17 @@ const url = new URL(process.env['E2E_ENDPOINT']);
 
 describe('POST /offers', async () => {
   test('Success offers create', async (tc) => {
+    const email = 'test@gmail.com';
+    const password = '12345678910';
+
     const offer = {
       name: 'nametenlenght',
       description: 'descriptiontwentylenght',
-      city: Cities.Amsterdam,
+      city: Cities.Cologne,
       premium: true,
-      housingType: HousesType.House,
-      roomCount: 2,
-      guestCount: 3,
+      housingType: HousesType.Hotel,
+      roomCount: 1,
+      guestCount: 2,
       cost: 10000,
       facilities: [Facility.AirConditioning],
       userId: '',
@@ -30,8 +33,8 @@ describe('POST /offers', async () => {
     };
 
     const user = {
-      email: 'test@test.com',
-      password: '12345678910',
+      email,
+      password,
     };
 
     const registerResponse = await fetch(new URL('/users/register', url), {
@@ -41,9 +44,9 @@ describe('POST /offers', async () => {
       }),
       body: JSON.stringify({
         type: 'simple',
-        email: 'test@test.com',
+        email,
         username: 'name',
-        password: '12345678910',
+        password,
       })
     });
 

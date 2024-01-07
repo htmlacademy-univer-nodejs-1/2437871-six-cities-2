@@ -1,6 +1,6 @@
 import TSVFileReader from '../file-reader/tsv-file-reader.js';
-import { CommandInterface } from './commands.interface';
-import {createOffer} from '../helpers/offer.js';
+import { CommandInterface } from './commands.interface.js';
+import createOffer from '../helpers/create-offer.js';
 import chalk from 'chalk';
 import {throwErrorMessage} from '../helpers/error.js';
 import {UserServiceInterface} from '../../modules/user/user-service.interface';
@@ -15,7 +15,7 @@ import {UserModel} from '../../modules/user/user.entity';
 import MongoClientService from '../database-client/mongo-client.service';
 import {Offer} from '../../types/offer.js';
 import {DEFAULT_USER_PASSWORD, DEFAULT_DB_PORT} from '../helpers/constants.js';
-import {getConnectionString} from '../helpers/connection-string.js';
+import {connectionString} from '../helpers/connection-string/connection-string.js';
 
 export default class ImportCommand implements CommandInterface {
   public readonly name = '--import';
@@ -59,7 +59,7 @@ export default class ImportCommand implements CommandInterface {
 
   public async execute(...parameters: string[]): Promise<void> {
     const [filename, login, password, host, dbname, salt] = parameters;
-    const uri = getConnectionString(login, password, host, DEFAULT_DB_PORT, dbname);
+    const uri = connectionString(login, password, host, DEFAULT_DB_PORT, dbname);
     this.salt = salt;
 
     await this.databaseService.connect(uri);

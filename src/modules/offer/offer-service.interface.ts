@@ -7,7 +7,6 @@ import {DocumentExistsInterface} from '../../types/document-exists.js';
 
 export interface OfferServiceInterface extends DocumentExistsInterface {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
-
   findById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   find(count: number| undefined): Promise<DocumentType<OfferEntity>[]>;
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;

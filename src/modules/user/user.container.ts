@@ -5,7 +5,7 @@ import {types} from '@typegoose/typegoose';
 import {Component} from '../../types/component.js';
 import {UserEntity, UserModel} from './user.entity.js';
 import {Controller} from '../../core/controller/controller.abstract.js';
-import UserController from './user.controller.js';
+import UserController from './controller/user.controller.js';
 
 export function createUserContainer() {
   const userContainer = new Container();
