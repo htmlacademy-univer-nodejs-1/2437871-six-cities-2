@@ -2,7 +2,7 @@ import {inject, injectable} from 'inversify';
 import {DocumentType, types} from '@typegoose/typegoose';
 import {CommentServiceInterface} from './comment-service.interface.js';
 import {Component} from '../../types/component.js';
-import {CommentEntity} from './comment.entity';
+import {CommentEntity} from './comment.entity.js';
 import CreateCommentDto from './dto/create-comment.dto.js';
 import {OfferServiceInterface} from '../offer/offer-service.interface.js';
 import {SortType} from '../../types/sort-type.js';

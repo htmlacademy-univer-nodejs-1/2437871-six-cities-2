@@ -1,3 +1,3 @@
-export default function isObject(value: unknown) {
-  return typeof value === 'object' && value !== null;
-}
+const isObject = (value: unknown) => typeof value === 'object' && value !== null;
+
+export default isObject;

@@ -21,9 +21,9 @@ exports[`POST /users/register > Invalid email 1`] = `
 
 exports[`POST /users/register > Success user register 1`] = `
 {
-  "avatar": "",
+  "avatar": "http://localhost:4000/static/empty-avatar.jpg",
   "email": "test@test.com",
-  "id": "6598869a69ce73e773f0d8e6",
+  "id": "659b27765f9ffd5d697bab8e",
   "type": "simple",
   "username": "name",
 }

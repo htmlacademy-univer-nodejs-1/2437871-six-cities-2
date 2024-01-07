@@ -1,16 +1,17 @@
 import isObject from './is-object.js';
 
-export default function transformProperty(
+const transformProperty = (
   property: string,
-  someObject: Record<string, unknown>,
-  transformFn: (object: Record<string, unknown>) => void
-) {
-  return Object.keys(someObject)
+  obj: Record<string, unknown>,
+  callbackFn: (object: Record<string, unknown>) => void
+) =>
+  Object.keys(obj)
     .forEach((key) => {
       if (key === property) {
-        transformFn(someObject);
-      } else if (isObject(someObject[key])) {
-        transformProperty(property, someObject[key] as Record<string, unknown>, transformFn);
+        callbackFn(obj);
+      } else if (isObject(obj[key])) {
+        transformProperty(property, obj[key] as Record<string, unknown>, callbackFn);
       }
     });
-}
+
+export default transformProperty;

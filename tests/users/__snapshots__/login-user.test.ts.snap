@@ -8,7 +8,7 @@ exports[`POST /users/login > Invalid password or email 1`] = `
 
 exports[`POST /users/login > Success user login 1`] = `
 {
-  "email": "test@test.com",
-  "token": "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpZCI6IjY1OTg4NzFlY2RlZDlmOWE0MjMwOGRhNiIsImlhdCI6MTcwNDQ5NDg3OCwiZXhwIjoxNzA0NDk1MjM4fQ.lKSGHiQqp52F0Iv145pvaQpMPzCHe8sYVbq_uS790Gc",
+  "email": "test@gmail.com",
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOiI2NTliMjcwNTFkMDI3ZmRiNGRkOTQ1YjYiLCJpYXQiOjE3MDQ2NjY4ODUsImV4cCI6MTcwNDY2NzI0NX0.hp0F__2gvVrxfcHe03NB8Vnn6O9dSWnLhMd6pYzOncQ",
 }
 `;

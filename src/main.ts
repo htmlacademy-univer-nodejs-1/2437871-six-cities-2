@@ -11,6 +11,7 @@ const mainContainer = Container.merge(createApplicationContainer(),
   createUserContainer(),
   createOfferContainer(),
   createCommentContainer());
+
 const application = mainContainer.get<Application>(Component.Application);
 
 await application.init();

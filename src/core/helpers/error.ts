@@ -1,9 +1,5 @@
-export function throwErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : '';
-}
+export const throwErrorMessage = (error: unknown): string => error instanceof Error ? error.message : '';
 
-export function createErrorObject(message: string) {
-  return {
-    error: message,
-  };
-}
+export const createErrorObject = (message: string) => ({
+  error: message,
+});

@@ -8,7 +8,7 @@ import {LoggerInterface} from '../../core/logger/logger.interface.js';
 import {Component} from '../../types/component.js';
 import {OfferEntity} from '../offer/offer.entity.js';
 import LoginUserDto from './dto/login-user.dto.js';
-import {DEFAULT_AVATAR_FILE_NAME} from '../../core/helpers/constants.js';
+import {DEFAULT_AVATAR_NAME} from '../../core/helpers/constants.js';
 import UpdateUserDto from './dto/update-user.dto.js';
 
 @injectable()
@@ -22,7 +22,7 @@ export default class UserService implements UserServiceInterface {
   }
 
   public async create(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
-    const user = new UserEntity({...dto, avatar: DEFAULT_AVATAR_FILE_NAME});
+    const user = new UserEntity({...dto, avatar: DEFAULT_AVATAR_NAME});
     user.setPassword(dto.password, salt);
 
     const result = await this.userModel.create(user);

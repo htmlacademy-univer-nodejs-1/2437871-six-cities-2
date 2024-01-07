@@ -2,7 +2,7 @@ import {Container} from 'inversify';
 import {LoggerInterface} from '../core/logger/logger.interface.js';
 import {ConfigInterface} from '../core/config/config.interface.js';
 import {DatabaseClientInterface} from '../core/database-client/database-client.interface.js';
-import {RestSchema} from '../core/config/rest.schema';
+import {RestSchema} from '../core/config/rest.schema.js';
 import {Component} from '../types/component.js';
 import Application from './application.js';
 import LoggerService from '../core/logger/logger.service.js';

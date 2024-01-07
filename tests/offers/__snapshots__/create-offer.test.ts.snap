@@ -2,28 +2,33 @@
 
 exports[`POST /offers > Success offers create 1`] = `
 {
-  "__v": 0,
-  "_id": "6598873f9bba8f1a1b5a5283",
-  "city": "Amsterdam",
+  "city": "Cologne",
   "commentsCount": 0,
   "coordinates": {
     "latitude": 2.22222,
     "longitude": 3.444444,
   },
   "cost": 10000,
-  "createdAt": "2024-01-05T22:48:32.001Z",
   "description": "descriptiontwentylenght",
   "facilities": [
     "AirConditioning",
   ],
-  "guestCount": 3,
-  "housingType": "House",
-  "images": [],
+  "guestCount": 2,
+  "housingType": "Hotel",
+  "id": "659b253894c716e5f827c638",
+  "images": "http://localhost:4000/upload/",
   "name": "nametenlenght",
+  "offerAuthor": {
+    "avatar": "http://localhost:4000/static/empty-avatar.jpg",
+    "email": "test@gmail.com",
+    "id": "659b253894c716e5f827c635",
+    "type": "simple",
+    "username": "name",
+  },
   "premium": true,
+  "previewImage": "http://localhost:4000/upload/",
+  "publicationDate": "2024-01-07T22:27:04.864Z",
   "rating": 1,
-  "roomCount": 2,
-  "updatedAt": "2024-01-05T22:48:32.001Z",
-  "userId": "6598873f9bba8f1a1b5a5280",
+  "roomCount": 1,
 }
 `;
